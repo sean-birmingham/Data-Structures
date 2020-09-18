@@ -68,19 +68,17 @@ class LinkedList:
     def remove_tail(self):
         if self.head is None:
             return None
-        elif self.head == self.tail:
-            value = self.head.get_value()
+        value = self.tail.get_value()
+        if self.head == self.tail:
             self.head = None
             self.tail = None
-            return value
         else:
-            value = self.tail.get_value()
             current = self.head
-        while current.get_next_node() != self.tail:
-            current = current.get_next_node()
-        self.tail = current
-        self.tail.set_next_node(None)
-        self.tail = current
+            while current.get_next_node() is not self.tail:
+                current = current.get_next_node()
+            self.tail = current
+            self.tail.set_next_node(None)
+           
         return value
 
     def contains(self, value):
@@ -121,6 +119,8 @@ class LinkedList:
 lnk_list = LinkedList()
 lnk_list.add_to_head(1)
 lnk_list.add_to_tail(2)
+lnk_list.add_to_tail(3)
+lnk_list.remove_tail()
 
 
 print([node.value for node in lnk_list])
