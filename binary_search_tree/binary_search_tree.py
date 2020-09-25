@@ -57,7 +57,7 @@ class BSTNode:
                 return False
             else:
                 # call contains on left child
-                self.left.contains(target)
+                return self.left.contains(target)
         # right?
         else:
             # check if there's no child to the right
@@ -65,7 +65,7 @@ class BSTNode:
                 return False
             else:
                 # call contains on the right child
-                self.right.contains(target)
+                return self.right.contains(target)
 
     # Return the maximum value found in the tree
 
@@ -96,29 +96,63 @@ class BSTNode:
         if self.right:
             # call for each on the right child
             self.right.for_each(fn)
-        pass
 
     # Part 2 -----------------------
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self):
-        pass
+        if self.left:
+            self.left.in_order_print()
+        print(self.value)
+        if self.right:
+            self.right.in_order_print()
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
+
     def bft_print(self):
-        pass
+        # create a QUEUE to keep track of nodes we are processing
+        queue = []
+        # add self to front of the queue
+        queue.append(self)
+        # while something is still in the queue
+        while len(queue) > 0:
+            # (not done processing all nodes)
+            # dequeue node from from the front of the queue
+            current = queue.pop(0)
+            # call print()
+            print(current.value)
+            # enqueue its left and right children
+            if current.left:
+                queue.append(current.left)
+            if current.right:
+                queue.append(current.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self):
-        pass
+        # create a STACK to keep track of nodes we are processing
+        stack = []
+        # push self into stack
+        stack.append(self)
+        # while something still in the stack (not done processing)
+        while len(stack) > 0:
+            # pop the node off the stack
+            current = stack.pop(0)
+            # call print()
+            print(current.value)
+            # push its left and right children onto the stack
+            if current.left:
+                stack.append(current.left)
+            if current.right:
+                stack.append(current.right)
 
     # Stretch Goals -------------------------
     # Note: Research may be required
 
     # Print Pre-order recursive DFT
+
     def pre_order_dft(self):
         pass
 
@@ -140,13 +174,13 @@ bst.insert(3)
 bst.insert(4)
 bst.insert(2)
 
-# bst.bft_print()
-# bst.dft_print()
+bst.bft_print()
+bst.dft_print()
 
-# print("elegant methods")
-# print("pre order")
-# bst.pre_order_dft()
-# print("in order")
-# bst.in_order_dft()
-# print("post order")
-# bst.post_order_dft()
+print("elegant methods")
+print("pre order")
+bst.pre_order_dft()
+print("in order")
+bst.in_order_print()
+print("post order")
+bst.post_order_dft()
